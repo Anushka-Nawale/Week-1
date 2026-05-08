@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Firebase Login</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #f0f2f5;
+        }
+
+        .box {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 48%;
+            padding: 10px;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        #signupBtn { background: #4CAF50; }   /* green */
+        #loginBtn  { background: #ff6600; }   /* orange */
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>🔥 Firebase Auth</h2>
+    <input type="email" id="email" placeholder="Enter Email">
+    <input type="password" id="password" placeholder="Enter Password">
+    <button id="signupBtn" onclick="signup()">Sign Up</button>
+    <button id="loginBtn"  onclick="login()">Login</button>
+    <p id="msg"></p>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword }
+    from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    // YOUR Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyD_Tn2Fh6nN8z8mPCLXZ78ba1HVswULyjM",
+  authDomain: "fir-login-project-34d1c.firebaseapp.com",
+  projectId: "fir-login-project-34d1c",
+  storageBucket: "fir-login-project-34d1c.firebasestorage.app",
+  messagingSenderId: "714454466063",
+  appId: "1:714454466063:web:6d64b694b0ac9fa0fced7a",
+  measurementId: "G-YWBHL7HWR5"
+};
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // SIGNUP — creates new user in Firebase
+    window.signup = function() {
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
+
+        createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+            document.getElementById("msg").style.color = "green";
+            document.getElementById("msg").innerText = "✅ Signup Successful!";
+        })
+        .catch((error) => {
+            document.getElementById("msg").style.color = "red";
+            document.getElementById("msg").innerText = "❌ " + error.message;
+        });
+    }
+
+    // LOGIN — validates existing user
+    window.login = function() {
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
+
+        signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+            document.getElementById("msg").style.color = "green";
+            document.getElementById("msg").innerText = "✅ Login Successful!";
+        })
+        .catch((error) => {
+            document.getElementById("msg").style.color = "red";
+            document.getElementById("msg").innerText = "❌ " + error.message;
+        });
+    }
+</script>
+</body>
+</html>

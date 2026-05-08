@@ -1,0 +1,85 @@
+
+✅ PART 0: Login & Setup (Do this first)
+Go to 👉 https://aws.amazon.com
+Click Sign In → Console
+Search in top bar: Lambda
+Open AWS Lambda
+✅ PART 1: Create Lambda Function (Common for both)
+Step 1: Create Function
+Click Create function
+Choose → Author from scratch
+Fill details:
+Function name → MyLambdaFunction
+Runtime → Python 3.12 (easy for beginners)
+Click Create function
+Step 2: Add Code
+
+Scroll down → Code section
+
+Replace code with this:
+
+import json
+
+def lambda_handler(event, context):
+    print("Event received:", event)
+
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Hello from Lambda!')
+    }
+
+👉 Click Deploy (IMPORTANT)
+
+✅ PART 2: Trigger 1 — S3 Upload
+Step 1: Create S3 Bucket
+Search → S3
+Click Create bucket
+Bucket name → my-lambda-bucket-123 (must be unique)
+Keep everything default
+Click Create bucket
+Step 2: Connect S3 to Lambda
+Go back to Lambda
+Open your function
+Scroll → Add trigger
+Select:
+Trigger type → S3
+Bucket → select your bucket
+Event type → All object create events
+Click Add
+Step 3: Test S3 Trigger
+Go to S3 bucket
+Click Upload
+Upload any file
+
+👉 Now Lambda runs automatically 🎉
+
+Check result:
+
+Go to Lambda → Monitor tab
+Click View logs in CloudWatch
+✅ PART 3: Trigger 2 — HTTP (API Gateway)
+Step 1: Add HTTP Trigger
+Open Lambda function
+Click Add trigger
+Select → API Gateway
+Choose:
+API type → HTTP API
+Security → Open (for testing)
+Click Add
+Step 2: Get URL
+
+After adding:
+
+You will see API endpoint URL
+
+Example:
+
+https://abc123.execute-api.ap-south-1.amazonaws.com
+Step 3: Test HTTP Call
+
+Open browser or use Postman:
+
+👉 Paste URL → press Enter
+You should see:
+
+"Hello from Lambda!"

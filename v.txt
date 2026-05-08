@@ -1,0 +1,18 @@
+VM1 -> VM2 transfer of file
+
+1) Create normal instances...allow every traffic
+2) server-vm1, destination-vm2
+in server go to security then security groups edit inbound rules add ssh, anywhere,0
+similar for destination-vm2
+3) go to iam then roles, create role use case ec2 then next amazons3filesfullaccess, amazons3fullaccess then next
+role name ec2-s3-access then create role
+4) go to s3 bucket create bucket then bucket name then go to server-vm and in actions go to security
+modify iam rules update that rule similar for destination
+5) connect to both servers
+then in server go type -- > echo "hello aws" >file2.txt
+ls
+aws s3 cp file2.txt s3://name of s3 bucket/
+scp file2.txt ec2-user@privateip of destination:/home/ec2-user/
+in destination
+aws s3 cp file2.txt s3://nameofs3bucket/file2.txt .
+cat file2.txt
